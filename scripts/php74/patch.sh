@@ -114,22 +114,16 @@ systemctl restart php-fpm
 
 fail=0
 
-if php -i | grep -q max_multipart_body_parts; then
-  echo "OK: php -i có max_multipart_body_parts"
+marker="Possible integer overflow in memory allocation"
+if strings /usr/sbin/php-fpm | grep -F -q "$marker"; then
+  echo "OK: /usr/sbin/php-fpm đã có bản vá 2026"
 else
-  echo "FAIL: php -i không có max_multipart_body_parts"
+  echo "FAIL: /usr/sbin/php-fpm chưa có bản vá 2026"
   fail=1
 fi
 
-if strings /usr/sbin/php-fpm | grep -q max_multipart_body_parts; then
-  echo "OK: /usr/sbin/php-fpm đã có bản vá"
-else
-  echo "FAIL: /usr/sbin/php-fpm chưa có bản vá"
-  fail=1
-fi
-
-if strings /root/php-backup/php-fpm | grep -q max_multipart_body_parts; then
-  echo "FAIL: file backup cũng chứa bản vá"
+if strings /root/php-backup/php-fpm | grep -F -q "$marker"; then
+  echo "FAIL: file backup cũng chứa bản vá 2026"
   fail=1
 else
   echo "OK: file backup là bản cũ"
