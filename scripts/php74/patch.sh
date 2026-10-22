@@ -114,7 +114,7 @@ systemctl restart php-fpm
 
 fail=0
 
-marker="Possible integer overflow in memory allocation"
+marker="zend_mm_safe_error_ex"
 if strings /usr/sbin/php-fpm | grep -F -q "$marker"; then
   echo "OK: /usr/sbin/php-fpm đã có bản vá 2026"
 else
