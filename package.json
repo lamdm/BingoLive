@@ -1,0 +1,9 @@
+{
+  "name": "bingolive",
+  "private": true,
+  "scripts": {
+    "dev:api": "cd api && php artisan serve --host=0.0.0.0 --port=8000",
+    "dev:reverb": "cd api && php artisan reverb:start --host=0.0.0.0 --port=8080",
+    "dev:client": "npm run dev --prefix client -- --host 0.0.0.0 --port 5173"
+  }
+}
